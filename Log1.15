@@ -1,0 +1,8 @@
+1、UI编辑器使用
+  a、前提：先安装VS2005（倘若安装了VS2010，应先卸载VS2010），装完Vs2005先打Service包，再打Update包
+  b、修改uieditor.bat批处理文件中 mobileclient 和 UIEditor.exe 的路径，如果没有则添加脚本，脚本如下：
+  cd  "..\config\mobileclient"
+  E:\mobile_uieditor\UIEditor.exe  //这需是绝对路径
+  pause
+  
+2、Lua 学习心得
