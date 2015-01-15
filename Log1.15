@@ -1,38 +1,103 @@
 1、UI编辑器使用
-  a、前提：先安装VS2005（倘若安装了VS2010，应先卸载VS2010），装完Vs2005先打Service包，再打Update包
-  b、修改uieditor.bat批处理文件中 mobileclient 和 UIEditor.exe 的路径，如果没有则添加脚本，脚本如下：
-  cd  "..\config\mobileclient"
-  E:\mobile_uieditor\UIEditor.exe  //这需是绝对路径
-  pause
+    a、前提：先安装VS2005（倘若安装了VS2010，应先卸载VS2010），装完Vs2005先打Service包，再打Update包
+    b、修改uieditor.bat批处理文件中 mobileclient 和 UIEditor.exe 的路径，如果没有则添加脚本，脚本如下：
+    cd  "..\config\mobileclient"
+    E:\mobile_uieditor\UIEditor.exe  //这需是绝对路径
+    pause
   
-2、Lua 学习心得
+2、Lua 学习总结
 第一章
-  环境变量 LUA_INIT 值:@filename  或者  filename 
-  @filename：Lua加载指定文件
-  filename ：Lua 把filename当作Lua代码文件并执行（添加代码实现）
+    环境变量 LUA_INIT 值:@filename  或者  filename 
+    @filename：Lua加载指定文件
+    filename ：Lua 把filename当作Lua代码文件并执行（添加代码实现）
 
 第二章
-  Booleans值: 除了false 和 nil 为假，其余都为真（0 和 空串 都是真）
+    Booleans值: 除了false 和 nil 为假，其余都为真（0 和 空串 都是真）
+    
+    Strings: Lua是8为字节，转义符 \,常见转义字符如下：
+    \a     bell
+    \b  -- 后退
+    \f  -- 换页
+    \n  -- 换行
+    \r  -- 回车
+    \t  -- 制表
+    \v     vertical tab
+    \\  -- "\"
+    \"  -- 双引号
+    \'  -- 单引号
+    
+    string 和 numbers 之间自动进行类型转换
+    例子: print("10" + 1)  --> 11     不过如果字符串不是纯数字则无法转换
+          print(10 .. 20)  --> 1020   ..  是字符串连接符
+    使用函数转换： tonumber()    tostring()
+    使用 .. 转换： number .. ""
+    
+    Userdata: 在Lua中除了赋值和相等比较没有预定义的操作
   
-  Strings: Lua是8为字节，转义符 \,常见转义字符如下：
-  \a     bell
-  \b  -- 后退
-  \f  -- 换页
-  \n  -- 换行
-  \r  -- 回车
-  \t  -- 制表
-  \v     vertical tab
-  \\  -- "\"
-  \"  -- 双引号
-  \'  -- 单引号
-  
-  string 和 numbers 之间自动进行类型转换
-  例子: print("10" + 1)  --> 11     不过如果字符串不是纯数字则无法转换
-        print(10 .. 20)  --> 1020   ..  是字符串连接符
-  使用函数转换： tonumber()    tostring()
-  使用 .. 转换： number .. ""
-  
-  Userdata: 在Lua中除了赋值和相等比较没有预定义的操作
-  
-  
-  
+第三章 表达式
+    算术运算符：+ - * / ^   （负值）
+    
+    关系运算符：< > <= >= == ~=
+    注意：nil 只和自己相等，对象比较（同一对象才相等）
+    
+    逻辑运算符：and  or  not
+    知识点：返回值问题
+    A and B ：A真返回B，A假返回A
+    A or B  : A真返回A，A假返回B
+    A = A or v：A为false 或者 nil 给A赋初始值
+    
+    三元运算符：
+    a ? b : c <--> (a and b) or c  (?)
+    假设：
+    a = true
+    b = false
+    c = true     上述的三元运算不等价  
+    
+    表的构造：
+    构造函数{} 创建空表
+    a = {x = 0, y = 0}  <--> a = {}; a.x = 0; a.y = 0;
+    构造时直接初始化              构造空表后再赋值
+   
+    w = {x=0, y=0, label="console", {x = 0, y = 1}}
+    x = {sin(0), sin(1), sin(2)}
+    w[1] = "another field"
+    print(w["x"]) --> 0
+    w.x = nil -- remove field "x"
+    x.f = w  --重新创建x.f表
+    print(x.f[1]) --> another field
+    
+    表：一个key 对应一个 value
+    key：索引值 (如：w 中的 (x, y, label, 1)) 
+    由key值获取value
+    
+    list 风格初始化和 record 风格初始化
+    {x=0, y=0}  <-->  {["x"]=0, ["y"]=0}
+    { "red", "green", "blue"}  <--> {[1]="red", [2]="green", [3]="blue"}
+
+第四章 基本语法
+    赋值语句：多值赋值
+    
+    局部变量：local关键字
+    block 划定一个明确的界限：do...end
+    
+    控制结构语句(循环)：
+    1、while condition do 
+        ...
+       end
+    2、repeat 
+        ...
+       until conditions
+    3、数值for循环
+       for i = exp1(初始值)，exp2(终止值)，exp3(步长) do   --步长默认为1
+        ...
+       end
+       三个表达式只在循环开始前被计算一次
+    4、范型for循环
+       for i,v in ipairs(a) do -- v = ipairs(...)
+       print(v) 
+       end
+      
+第五章 函数
+    当函数只有一个参数（字符串或者表结构(可以是空表)）时，()可以省略
+    多值返回：特殊函数 unpack()
+    调用可变参数的可变函数：f = string.find  --类似函数指针
