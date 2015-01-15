@@ -6,3 +6,33 @@
   pause
   
 2、Lua 学习心得
+第一章
+  环境变量 LUA_INIT 值:@filename  或者  filename 
+  @filename：Lua加载指定文件
+  filename ：Lua 把filename当作Lua代码文件并执行（添加代码实现）
+
+第二章
+  Booleans值: 除了false 和 nil 为假，其余都为真（0 和 空串 都是真）
+  
+  Strings: Lua是8为字节，转义符 \,常见转义字符如下：
+  \a     bell
+  \b  -- 后退
+  \f  -- 换页
+  \n  -- 换行
+  \r  -- 回车
+  \t  -- 制表
+  \v     vertical tab
+  \\  -- "\"
+  \"  -- 双引号
+  \'  -- 单引号
+  
+  string 和 numbers 之间自动进行类型转换
+  例子: print("10" + 1)  --> 11     不过如果字符串不是纯数字则无法转换
+        print(10 .. 20)  --> 1020   ..  是字符串连接符
+  使用函数转换： tonumber()    tostring()
+  使用 .. 转换： number .. ""
+  
+  Userdata: 在Lua中除了赋值和相等比较没有预定义的操作
+  
+  
+  
