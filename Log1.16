@@ -81,7 +81,7 @@
    IO库函数：io.read(参数) 参数：*number(读取数值)  *all(读取整个文件)  *line(读取一行)  num(读取字符数)
    	     io.write(参数) 参数之间可以以 , 分隔， 也可以使用连接符 ..
    	     注：类似print，不过print函数会附加格外的格式(换行符'\n'，制表符'\t'),还能自动调用tostring函数
-   	     io.lines(filename) 迭代函数
+   	     io.lines(filename) 迭代函数，每次获取一行内容，结束自动关闭文件
    	     io.close()
    	     注：文件操作 file = io.open(filename, mode)  通过文件句柄进行操作  file:函数
        
