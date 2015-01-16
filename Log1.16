@@ -1,6 +1,6 @@
 第五章 函数
   可变参数：前面的实参传给函数固定的参数，后面的实参存放在arg表中
-    a、亚元（_） --使用亚元获取想要的返回值
+    a、亚元（_） --使用亚元获取返回值中那些不想要的值
     b、自定义选择函数
     
   命名参数：？？ P37
@@ -14,7 +14,7 @@
   排序函数：
   table.sort(network, function (a,b)
 	return (a.name > b.name)
-  end)   ？？排序结果有问题
+  end) 
   
   闭包：
   内部函数使用外部函数变量这个变量称为外部的局部变量或者 upvalue 
@@ -53,5 +53,36 @@
      block
     end
   
-  
-  
+   无状态的迭代器：不保留状态，避免创建闭包
+   
+   for ... in pairs(t) do   <-->  for ... in next, t do
+   
+第十一章 数据结构
+   list
+   根节点： list = nil
+   list = {next = list, value = v}
+   注：每个节点都是一个表
+   
+   队列：pushright  popleft (严格上调用函数)
+   注：注意first last 的变化，判空
+   
+   集合和包：将集合中的元素作为下标存在table里(["color"] = true),查找是只需看给定的元素对应下标的元素值是否为nil
+    
+   字符串缓冲区
+   table库函数：table.remove(table) 删除表中最后一个元素，并返回其值
+   		table.concat(table) 将一个列表中所有串合并
+   		table.getn(table) 获取表中元素个数
+   		table.insert(table,pos,val) 在pos位置插入数值val
+   		table.sort(table,自定义比较函数) 排序
+   		table.foreachi(table,func) 从 1 开始连续的变量table中的key 和 value 
+   		table.foreach(table,func) 遍历整个table中的 key 和 value
+   		table.maxn(table)  获取 table 中最大的 key 值
+   		
+   IO库函数：io.read(参数) 参数：*number(读取数值)  *all(读取整个文件)  *line(读取一行)  num(读取字符数)
+   	     io.write(参数) 参数之间可以以 , 分隔， 也可以使用连接符 ..
+   	     注：类似print，不过print函数会附加格外的格式(换行符'\n'，制表符'\t'),还能自动调用tostring函数
+   	     io.lines(filename) 迭代函数
+   	     io.close()
+   	     注：文件操作 file = io.open(filename, mode)  通过文件句柄进行操作  file:函数
+       
+   
