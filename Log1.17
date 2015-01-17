@@ -1,0 +1,24 @@
+知识点查漏：
+  Lua基本类型：nil、 boolean、number、 string、 userdata、 function、 thread 和 table。
+  注：type函数查看类型
+  string字符串表示：[[...]](方便一段代码表示)
+  
+资源编辑器使用
+  1、先创建文件夹存放图片资源  目录如：E:\mobile_reseditor\common_image_g2
+  2、在资源编辑器中新建或打开 sprite 文件 目录如：E:\mobile_reseditor\assets_g2
+  3、在工具栏 导入图片资源(步骤1 创建的文件), 导入后 创建ui
+  4、将资源文件压缩处理 导到  E:\config\mob ileclient\assets\ui\csprite 目录下 (导出ui)
+     注：导出纹理图可以查看资源大小
+  5、删除图片资源：csprite列表中删除，sprite 列表中删除，工具栏删除图片资源 在删除对话框中输入 删除图片全名
+                   最后到原始图片文件夹中删除
+     注：检查图片是否删除，右键点击sprite列表 添加sprite 可以查看到已导入的图片
+  注意：1、2、4 文件名要一致
+  
+UI编辑器 
+  1、在 UIEditor.ini 中设置资源所在目录
+     res_root_path=E:\config\mobileclient
+  2、编辑完保存路径: E:\mobile_uieditor\assets\ui\layout
+  3、提交：编辑commit.bat，设置提交目的目录：E:\config\mobileclient\assets\ui
+     注：将压缩后的layout和cn.xml文件拷贝到config目录下
+  
+  注意：以树状形式添加控件，图片缩放(避免变模糊可设置9宫网格(资源编辑器中设置))
