@@ -1,0 +1,10 @@
+一、基础概念介绍——导演、场景、层、精灵
+  scene -> layer -> sprite
+  场景添加层函数： addChild( Node child ) addChild( Node child, int zOrder ) addChild( Node *child, int zOrder, int tag )
+  创建层：
+  auto layer = LayerColor::create(Color4B(0, 128, 128, 255));
+  layer->setContentSize(CCSizeMake(120, 80));
+  layer->setPosition(Point(50, 50));
+  addChild(layer, 10);
+  
+  精灵： Texture2D(加载)
