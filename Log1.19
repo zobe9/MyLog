@@ -1,0 +1,27 @@
+一、基础概念介绍——导演、场景、层、精灵
+  scene -> layer -> sprite
+  场景添加层函数： addChild( Node child ) addChild( Node child, int zOrder ) addChild( Node *child, int zOrder, int tag )
+  创建层：
+  auto layer = LayerColor::create(Color4B(0, 128, 128, 255));
+  layer->setContentSize(CCSizeMake(120, 80));
+  layer->setPosition(Point(50, 50));
+  addChild(layer, 10);
+  
+  精灵： Texture2D(加载)
+  
+二、调度器(scheduler)
+  原理：为游戏提供定时时间和定时调度服务
+  Node不在可见或者从场景中移除时，调度器停止；Cocos2d-x 暂停调度器暂停，开始调度器自动继续启动；
+  Cocos2d-x封装了一个供各种不同平台使用的调度器，使用此调度器不用关心和跟踪所设定的定时对象的销毁和停止，以及崩溃的风险
+  
+  用法：处理动态事件
+  每帧绘制前都会被调用一次,停止用 unschedulerUpdate() 函数
+  默认调度器：schedulerUpdate()     -- 使用 Node 的刷新事件update方法,cocos2d-x中 Node 默认没有启用update事件，需要重载
+  
+  自定义时间间隔检测，提高游戏性能, 取消调度器函数unschedule(SEL_SCHEDULE selector, float delay) 
+  自定义调度器： schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay) 
+  注：事件处理函数  触发时间间隔(>0.1s)   触发次数(默认 kRepeatForever)  触发前延时
+  
+  针对那些只做一次逻辑检测
+  单次调度器: scheduleOnce(SEL_SCHEDULE selector, float delay) 
+  
