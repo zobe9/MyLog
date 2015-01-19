@@ -25,3 +25,89 @@
   针对那些只做一次逻辑检测
   单次调度器: scheduleOnce(SEL_SCHEDULE selector, float delay) 
   
+-------------------------------------------------------------------------------------------------------------------------  
+一、函数调用： .  :  区别
+定义的时候冒号默认接收self参数，调用的时候冒号默认传递调用者自己为参数
+例子：
+    Class = {}
+    Class.__index = Class
+     
+    function Class:new(x,y)
+        local temp = {}
+        setmetatable(temp, Class)
+        temp.x = x
+        temp.y = y
+        return temp
+    end
+     
+    function Class:test()
+        print(self.x,self.y)
+    end
+     
+    object = Class.new(selt,10,20)
+    object = Class:new(10,20)
+    
+    object:test()
+
+二、metatable：任何一个表都可以是其他表的 metatable
+    创建元表函数： setmetatable(a, b) --表b是a的元表
+    metamethods的使用例子：
+    Set = {}
+    function Set.new (t)
+    local set = {}
+    setmetatable(set, Set.mt) 
+    for _, l in ipairs(t) do set[l] = true end
+    return set
+    end
+    
+    function Set.union (a,b)
+    local res = Set.new{}
+    for k in pairs(a) do res[k] = true end
+    for k in pairs(b) do res[k] = true end
+    return res
+    end
+
+    Set.mt = {}
+    -- Set.mt.__metatable = "..."   对metatables进行保护，getmetable()返回这个域的值，setmetatable()出错
+    s1 = Set.new{10,20,30}  --s1、s2 共享元表 Set.mt
+    s2 = Set.new{50, 15}
+    Set.mt.__add = Set.union  --加法操作，类似c++运算符重载
+    s3 = s1 + s2
+    算术运算符： __add、 __mul __sub(减)、 __div(除)、 __unm(负)、 __pow(幂) __concat 定义连接行为
+    关系运算符：__eq（等于）、 __lt（小于）、和__le（小于等于）注：a <= b <--> not(a > b)
+    注：1、Lua 选择算术运算 metamethod 的原则：如果第一个参数存在带有__add 域的 metatable， Lua使用它作为 metamethod，
+        和第二个参数无关；否则第二个参数存在带有__add 域的 metatable， Lua 使用它作为 metamethod 否则报错。
+        2、关系元算的metamethods不支持混合类型运算(比较不同类型数据 或 带有不同metamethods对象)，但相等比较不会抛出错误
+        
+三、__index __newindex元方法(当表中访问的域不存在才起作用)
+    __index:
+    father = {  
+        house=1 
+      }  
+    father.__index = father -- 把father的__index方法指向自己  
+    son = {  
+         car=1
+        }  
+    setmetatable(son, father)  --将father设置成son的元表  {__index = father}  <--> father.__index = father
+    print(son.house
+    在上述例子中，访问son.house时，son中没有house这个成员，但Lua接着发现son有元表father，于是father被当做元表来查找，
+    Lua并不是直接在father中找名为house的成员，而是调用father的__index方法，如果__index方法为nil，则返回nil，
+    如果是一个表（上例中father的__index方法等于自己），那么就到__index方法所指的这个表中查找名为house的成员，最终找到了house成员
+    注：__index方法除了可以是一个表，还可以是一个函数，如果是一个函数，__index方法被调用时将返回该函数的返回值
+    
+    __newindex:当给表中不存在的域赋值时，解释器寻找该方法，存在则通过该方法进行赋值(rawset函数进行赋值)
+    例子：
+    Window.mt.__newindex = function (table ,key ,value)	if key == "wangbin" then	
+                           rawset(table ,"wangbin" ,"yes,i am") end end
+    w = Window.new{x = 10 ,y = 20}
+    w.wangbin = "55"  --给表中不存在的域赋值
+    print(w.wangbin)  --最终值看rawset函数所赋予的值 此处值为：yes,i am
+---------------------------------------------------------------------------------------------------------------------------
+MVC 设计模式
+ model：应用程序中用于处理应用程序数据逻辑的部分，负责在数据库中存取数据，为视图提供数据
+ view：处理数据显示，依据模型数据创建
+ controller：处理用户交互，负责从视图读取数据，控制用户输入，并向模型发送数据 
+ 操作：接收请求并决定调用哪个模型构件去处理请求，然后再确定用哪个视图来显示返回的数据
+
+
+  
