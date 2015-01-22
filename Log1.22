@@ -1,0 +1,13 @@
+客户端创建流程
+  准备工作：编辑好界面(使用到的编辑器：资源编辑器、UI编辑器)
+  资源编辑器：导入资源生成sprite,导出资源csprite(导入资源的路径：存放图片资源的文件夹；生成sprite路径：asset 目录下;
+                                                 导出csprite路径：客户端 assets\ui\csprite)
+  UI编辑器：记得及时保存，delete 直接删除当前模块（少用）
+  
+  代码编写：
+  1、创建界面显示类   -->   BgView = BgView or BaseClass(BaseView)   <-- 继承了BaseView  
+  2、定义初始化函数 __init()  --  获取要显示的窗口层
+  3、OpenBGView()    -- 获取主窗口，用于搭载子窗口（2中的窗口）调用 BaseViewMainFrame 类中的 OpenView
+    BaseWindowView.New(self, "title", ResSpriteConfig.bgua_g2, nil, nil, 4)   --ResSpriteConfig.bgua_g2 应先在ressprite_config.lua 添加所需的精灵资源
+  4、BaseWindowLoadback(base_view)   --在 BaseWindowView 中 BgView 调用该函数，参数是self  
+  5、loadLayoutCallback()            --将子窗口加载到主窗口中  注：getConstrol() 只能在该函数中调用
